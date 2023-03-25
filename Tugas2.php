@@ -72,8 +72,7 @@
     $status = isset($_POST['status']) ? $_POST['status'] : '';
     $agama = isset($_POST['agama']) ? $_POST['agama'] : '';
     $jumlahanak = isset($_POST['jmlhanak']) ? $_POST['jmlhanak'] : '';
-    $btn = $_POST['proses'];
-    $gajipokok = isset($_POST['gajipokok']) ? $_POST['gajipokok'] : '';
+    $gajiKotor = isset($_POST['gajiKotor']) ? $_POST['gajiKotor'] : '';
 
     switch($jabatan){
         case "Manager" : $gajipokok = 20000000;break;
@@ -140,7 +139,7 @@
 
     $zakat_profesi = ($agama == "Islam") ? $gajiKotor - (0.025 * $gajiKotor) : $gajiKotor;
 
-    if(isset($btn)){
+    if(isset($_POST['proses'])){
     ?>
     Nama : <?= isset($nama) ? $nama: ''; ?>
     <br> Agama : <?= $agama ?>
