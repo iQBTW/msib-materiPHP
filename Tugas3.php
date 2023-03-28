@@ -81,16 +81,16 @@ switch($grade) {
             <?php } ?>
     </tr> 
     <tr>
-        <td colspan="2">
+        <td colspan="2" align="center">
             <?= $jumlah_mhs ?>
         </td>
-        <td colspan="2">
+        <td colspan="2" align="center">
             <?= $max_nilai ?>
         </td>
-        <td colspan="2">
+        <td colspan="2" align="center">
             <?= $min_nilai ?>
         </td>
-        <td colspan="2">
+        <td colspan="2" align="center">
             <?= $rata_rata ?>
         </td>
     </tr>
