@@ -78,7 +78,7 @@ switch($grade) {
             <th colspan="2">
                 <?= $judulTfoot ?>
             </th>
-            <?php } ?>
+        <?php } ?>
     </tr> 
     <tr>
         <td colspan="2" align="center">
