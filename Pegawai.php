@@ -79,7 +79,7 @@ class Pegawai{
         echo '<br>Status '.$this->status;
         echo '<br>Gaji Pokok Rp.'.number_format($this->setGajiPokok($this->jabatan),0,',','.');
         echo '<br>Tunjangan Jabatan '.number_format($this->setTunjanganJabatan($this->jabatan),0,',','.');
-        echo '<br>Tunjangan Keluarga '.number_format($this->setTunjanganKeluarga($this->status,$this->jabatan),0,',','.');
+        echo '<br>Tunjangan Keluarga '.number_format($this->setTunjanganKeluarga($this->status),0,',','.');
         echo '<br>Zakat Profesi '.number_format($this->setZakatProfesi($this->agama,$this->jabatan),0,',','.');
         echo '<br>Gaji Bersih '.number_format($this->getTotalGaji($this->jabatan,$this->status,$this->agama),0,',','.');
         echo '<hr>';
