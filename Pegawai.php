@@ -26,52 +26,49 @@ class Pegawai{
             case 'Staff': $gapok = 5000000; break;
             default: $gapok;
         }
-        return $gapok;
-       
+        return $gapok;       
     }
 
     public function setTunjanganJabatan($jabatan) {
-        $this->jabatan = $jabatan;
 
         if($jabatan == 'Manager') {
-            $gapok = 15000000;
-            $tunjangan = 0.2 * $gapok;
+            $tunjangan = 0.2 * $this->setGajiPokok($jabatan);
         }else if($jabatan == 'Asisten Manager'){
-            $gapok = 10000000;
-            $tunjangan = 0.2 * $gapok;
+            $tunjangan = 0.2 * $this->setGajiPokok($jabatan);
         }else if($jabatan == 'Kepala Bagian'){
-            $gapok = 7000000;
-            $tunjangan = 0.2 * $gapok;
+            $tunjangan = 0.2 * $this->setGajiPokok($jabatan);
         }else if($jabatan == 'Staff'){
-            $gapok = 5000000;
-            $tunjangan = 0.2 * $gapok;
+            $tunjangan = 0.2 * $this->setGajiPokok($jabatan);
         }
         return $tunjangan;
     }
 
-    public function setTunjanganKeluarga($agama, $jabatan) {
-        $this->agama = $agama;
-        $this->jabatan = $jabatan;
-
-        if($jabatan == 'Manager') {
-            $gapok = 15000000;
-        }else if($jabatan == 'Asisten Manager'){
-            $gapok = 10000000;
-        }else if($jabatan == 'Kepala Bagian'){
-            $gapok = 7000000;
-        }else if($jabatan == 'Staff'){
-            $gapok = 5000000;
-        }
+    public function setTunjanganKeluarga($status,$jabatan) {
+        $this->status = $status;
         
-        $tunjanganKeluarga = ($this->agama = $agama == 'Islam') ? $gapok * 0.1 : $gapok;
+        $tunjanganKeluarga = ($status == 'Menikah') ? $this->setGajiPokok($jabatan) * 0.1 : 0;
         return $tunjanganKeluarga;
     }
 
-    public function setZakatProfesi($agama,$jabatan){
+    public function setZakatProfesi($agama){
         $this->agama = $agama;
-        $this->jabatan = $jabatan;
 
+        if($this->setGajiPokok($this->jabatan) > 5999999 && $agama == 'Islam') {
+            $zakat_profesi = $this->setGajiPokok($this->jabatan) * 0.025;
+        }else{
+            $zakat_profesi = 0;
+        }
+        return $zakat_profesi;
+    }
 
+    public function getTotalGaji(){
+        $gapok = $this->setGajiPokok($this->jabatan);
+        $tunjanganJabatan = $this->setTunjanganJabatan($this->jabatan);
+        $tunjanganKeluarga = $this->setTunjanganKeluarga($this->status,$this->jabatan);
+        $zakat_profesi = $this->setZakatProfesi($this->agama,$this->jabatan);
+
+        $total_Gaji = $gapok + $tunjanganJabatan + $tunjanganKeluarga - $zakat_profesi;
+        return $total_Gaji;
     }
 
     public function cetak(){
@@ -82,7 +79,9 @@ class Pegawai{
         echo '<br>Status '.$this->status;
         echo '<br>Gaji Pokok Rp.'.number_format($this->setGajiPokok($this->jabatan),0,',','.');
         echo '<br>Tunjangan Jabatan '.number_format($this->setTunjanganJabatan($this->jabatan),0,',','.');
-        echo '<br>Tunjangan Keluarga '.number_format($this->setTunjanganKeluarga($this->agama,$this->jabatan),0,',','.');
+        echo '<br>Tunjangan Keluarga '.number_format($this->setTunjanganKeluarga($this->status,$this->jabatan),0,',','.');
+        echo '<br>Zakat Profesi '.number_format($this->setZakatProfesi($this->agama,$this->jabatan),0,',','.');
+        echo '<br>Gaji Bersih '.number_format($this->getTotalGaji($this->jabatan,$this->status,$this->agama),0,',','.');
         echo '<hr>';
 
     }
