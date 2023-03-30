@@ -32,21 +32,21 @@ class Pegawai{
     public function setTunjanganJabatan($jabatan) {
 
         if($jabatan == 'Manager') {
-            $tunjangan = 0.2 * $this->setGajiPokok($jabatan);
+            $tunjangan = 0.2 * $this->setGajiPokok($this->jabatan);
         }else if($jabatan == 'Asisten Manager'){
-            $tunjangan = 0.2 * $this->setGajiPokok($jabatan);
+            $tunjangan = 0.2 * $this->setGajiPokok($this->jabatan);
         }else if($jabatan == 'Kepala Bagian'){
-            $tunjangan = 0.2 * $this->setGajiPokok($jabatan);
+            $tunjangan = 0.2 * $this->setGajiPokok($this->jabatan);
         }else if($jabatan == 'Staff'){
-            $tunjangan = 0.2 * $this->setGajiPokok($jabatan);
+            $tunjangan = 0.2 * $this->setGajiPokok($this->jabatan);
         }
         return $tunjangan;
     }
 
-    public function setTunjanganKeluarga($status,$jabatan) {
+    public function setTunjanganKeluarga($status) {
         $this->status = $status;
         
-        $tunjanganKeluarga = ($status == 'Menikah') ? $this->setGajiPokok($jabatan) * 0.1 : 0;
+        $tunjanganKeluarga = ($status == 'Menikah') ? $this->setGajiPokok($this->jabatan) * 0.1 : 0;
         return $tunjanganKeluarga;
     }
 
