@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.nav {
+    background-color: rgb(46, 46, 46);
+    justify-content: right;
+    padding: 10px 25px;
+}
+
+.nav li a {
+    font-family: 'Noto Sans', sans-serif;
+    color: white;
+    transition: all 0.2s ease 0s;
+}
+
+.nav li a:hover{
+    color: grey;
+}
+
+.carousel-item p {
+    color: orange;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.card-body {
+    display: flex;
+    justify-content: center;
+}
