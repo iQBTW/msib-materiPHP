@@ -10,7 +10,7 @@ $data_pesanan = $model->dataPesanan();
 // }
 
 ?>
-                        <h1 class="mt-4">Tables</h1>
+                        <h1 class="mt-4">Data Pesanan</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
                             <li class="breadcrumb-item active">Tables</li>

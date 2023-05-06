@@ -20,7 +20,7 @@
                                     <a class="nav-link" href="index.php?url=jenis_produk">Data Jenis Produk</a>
                                     <a class="nav-link" href="index.php?url=pelanggan">Data Pelanggan</a>
                                     <a class="nav-link" href="index.php?url=pesanan">Data Pesanan</a>
-                                    <a class="nav-link" href="index.php?url=kartupelanggan">Data Kartu</a>
+                                    <a class="nav-link" href="index.php?url=kartupelanggan">Data Kartu Membership</a>
                                     <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
                                 </nav>
                             </div>
