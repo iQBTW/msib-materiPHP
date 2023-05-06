@@ -38,7 +38,7 @@ $data_pelanggan = $model->dataPelanggan();
                                             <th>Tempat Lahir</th>
                                             <th>Tanggal Lahir</th>
                                             <th>Email</th>
-                                            <th>ID Kartu</th>
+                                            <th>Membership</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -50,7 +50,7 @@ $data_pelanggan = $model->dataPelanggan();
                                             <th>Tempat Lahir</th>
                                             <th>Tanggal Lahir</th>
                                             <th>Email</th>
-                                            <th>ID Kartu</th>
+                                            <th>Membership</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -66,7 +66,7 @@ $data_pelanggan = $model->dataPelanggan();
                                             <td><?= $row['tmp_lahir'] ?></td>
                                             <td><?= $row['tgl_lahir'] ?></td>
                                             <td><?= $row['email'] ?></td>
-                                            <td><?= $row['kartu_id'] ?></td>
+                                            <td><?= $row['jenis_kartu'] ?></td>
                                             
                                         </tr>
                                         <?php 
