@@ -3,7 +3,9 @@
 // include_once 'menu.php';
 
 $model = new Produk();
+$obj_Produk = new Produk();
 $data_produk = $model->dataProduk();
+$set_data_produk = $model->setProduk($data);
 
 // foreach ($data_produk as $row){
 //     print $row['kode'];
@@ -40,20 +42,22 @@ $data_produk = $model->dataProduk();
         <h5 class="modal-title" id="exampleModalLabel">Tambah Produk</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="POST">
+      <form action="controllers/produk_controllers.php" method="POST">
         <div class="modal-body">
-            <input type="text" name="kodeProduk" id="" placeholder="Nama Produk" class="form-control mb-2">
-            <input type="text" name="namaProduk" id="" placeholder="Nama Produk" class="form-control mb-2">
-            <input type="number" name="hargaBeli" id="" placeholder="Nama Produk" class="form-control mb-2">
-            <input type="number" name="stok" id="" placeholder="Nama Produk" class="form-control mb-2" required>
-            <input type="number" name="minStok" id="" placeholder="Nama Produk" class="form-control mb-2" required>
-            <input type="number" name="jenisProduk" id="" placeholder="Nama Produk" class="form-control mb-2" required>
+            <input type="text" name="kodeProduk" id="kodeProduk" placeholder="Kode Produk" class="form-control mb-2">
+            <input type="text" name="namaProduk" id="namaProduk" placeholder="Nama Produk" class="form-control mb-2">
+            <input type="number" name="hargaBeli" id="hargaBeli" placeholder="Harga Beli" class="form-control mb-2">
+            <input type="number" name="hargaJual" id="hargaJual" placeholder="Harga Jual" class="form-control mb-2">
+            <input type="number" name="stok" id="stok" placeholder="Stock Barang" class="form-control mb-2" required>
+            <input type="number" name="minStok" id="minStok" placeholder="Minimal Stock Barang" class="form-control mb-2" required>
+            <input type="number" name="jenisProduk" id="jenisProduk" placeholder="Kategori Barang" class="form-control mb-2" required>
+        </div>
+      
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" name="addtoProduk">Submit</button>
         </div>
       </form>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" name="addtoProduk">Submit</button>
-      </div>
     </div>
   </div>
 </div>
