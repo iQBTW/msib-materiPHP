@@ -7,6 +7,7 @@ class Produk{
         global $dbh;
         $this->koneksi = $dbh;
     }
+
     public function dataProduk()
     {
         $sql = "SELECT produk.*, jenis_produk.nama as Kategori FROM produk INNER JOIN jenis_produk ON jenis_produk.id = produk.jenis_produk_id";
@@ -14,6 +15,21 @@ class Produk{
         $ps->execute();
         $rs = $ps->fetchAll();
         return $rs;
+    }
+
+    public function getProduk($id){
+        $sql = "SELECT produk.*, jenis_produk.nama as Kategori FROM produk INNER JOIN 
+        jenis_produk ON jenis_produk.id = produk.jenis_produk_id WHERE produk.id = ?";
+        $ps = $this->koneksi->prepare($sql);
+        $ps->execute([$id]);
+        $rs = $ps->fetchAll();
+        return $rs;
+    }
+
+    public function setProduk($data){
+        $sql = "INSERT INTO produk (kode, nama, harga_beli, harga_jual, stok, min_stok, jenis_produk_id VALUES (?,?,?,?,?,?,?)";
+        $ps = $this->koneksi->prepare($sql);
+        $ps->execute($data);
     }
 }
 
