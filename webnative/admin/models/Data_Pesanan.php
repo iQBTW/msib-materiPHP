@@ -17,5 +17,10 @@ class DataPesanan{
         $rs = $ps->fetchAll();
         return $rs;
     }
+    public function setPesanan($data){
+        $sql = "INSERT INTO pesanan_items (produk_id, pesanan_id, qty, harga) VALUES (?,?,?,?)";
+        $ps = $this->koneksi->prepare($sql);
+        $ps->execute($data);
+    }
 }
 ?>

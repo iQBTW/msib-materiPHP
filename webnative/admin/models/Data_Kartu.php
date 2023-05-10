@@ -13,5 +13,10 @@ class DataKartu{
         $rs = $ps->fetchAll();
         return $rs;
     }
+    public function setKartu($data){
+        $sql = "INSERT INTO kartu (kode, nama, diskon, iuran) VALUES (?,?,?,?)";
+        $ps = $this->koneksi->prepare($sql);
+        $ps->execute($data);
+    }
 }
 ?>

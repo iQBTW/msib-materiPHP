@@ -13,5 +13,10 @@ class DataPelanggan{
         $rs = $ps->fetchAll();
         return $rs;
     }
+    public function setPelanggan($data){
+        $sql = "INSERT INTO pelanggan (kode, nama, jk, tmp_lahir, tgl_lahir, email, kartu_id) VALUES (?,?,?,?,?,?,?)";
+        $ps = $this->koneksi->prepare($sql);
+        $ps->execute($data);
+    }
 }
 ?>
