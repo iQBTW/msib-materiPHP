@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2023 at 07:24 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: May 11, 2023 at 01:22 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,11 +38,11 @@ CREATE TABLE `jenis_produk` (
 --
 
 INSERT INTO `jenis_produk` (`id`, `nama`, `ket`) VALUES
-(1, 'elektronik', 'tersedia'),
-(2, 'furniture', 'tersedia'),
-(3, 'makanan', 'tersedia'),
-(4, 'minuman', 'tersedia'),
-(5, 'komputer', 'tersedia');
+(1, 'Elektronik', 'tersedia'),
+(2, 'Furniture', 'tersedia'),
+(3, 'Makanan', 'tersedia'),
+(4, 'Minuman', 'tersedia'),
+(5, 'Komputer', 'tersedia');
 
 -- --------------------------------------------------------
 
@@ -63,10 +63,11 @@ CREATE TABLE `kartu` (
 --
 
 INSERT INTO `kartu` (`id`, `kode`, `nama`, `diskon`, `iuran`) VALUES
-(1, 'GOLD', 'Gold Utama', 0.05, 100000),
+(1, 'GOLD', 'Golden Utama', 0.05, 100000),
 (2, 'PLAT', 'Platinum Jaya', 0.1, 150000),
 (3, 'SLV', 'Silver', 0.025, 50000),
-(4, 'NO', 'Non Member', 0, 0);
+(4, 'NO', 'Non Member', 0, 0),
+(5, 'BRNZ', 'Bronze Member', 0.01, 20000);
 
 -- --------------------------------------------------------
 
@@ -83,26 +84,16 @@ CREATE TABLE `pelanggan` (
   `tgl_lahir` date DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `kartu_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pelanggan`
 --
 
 INSERT INTO `pelanggan` (`id`, `kode`, `nama`, `jk`, `tmp_lahir`, `tgl_lahir`, `email`, `kartu_id`) VALUES
-(1, 'C001', 'Agung Sedayu', 'L', 'Solo', '2010-01-01', 'sedayu@gmail.com', 1),
-(2, 'C002', 'Pandan Wangi', 'P', 'Yogyakarta', '1950-01-01', 'wangi@gmail.com', 2),
-(3, 'C003', 'Sekar Mirah', 'P', 'Kediri', '1983-02-20', 'mirah@yahoo.com', 1),
-(4, 'C004', 'Swandaru Geni', 'L', 'Kediri', '1981-01-04', 'swandaru@yahoo.com', 4),
-(5, 'C005', 'Pradabashu', 'L', 'Pati', '1985-04-02', 'prada85@gmail.com', 2),
-(6, 'C006', 'Gayatri Dwi', 'P', 'Jakarta', '1987-11-28', 'gaya87@gmail.com', 1),
-(7, 'C007', 'Dewi Gyat', 'P', 'Jakarta', '1988-12-01', 'giyat@gmail.com', 1),
-(8, 'C008', 'Andre Haru', 'L', 'Surabaya', '1990-07-15', 'andre.haru@gmail.com', 4),
-(9, 'C009', 'Ahmad Hasan', 'L', 'Surabaya', '1992-10-15', 'ahasan@gmail.com', 4),
-(10, 'C010', 'Cassanndra', 'P', 'Belfast', '1990-11-20', 'casa90@gmail.com', 1),
-(11, 'C011', 'Fadia', 'P', 'Jember', '2000-05-12', 'fadia@gmail.com', 2),
-(12, 'C012', 'Tes', 'L', 'Jember', '2003-05-08', 'tes@gmail.com', 1),
-(13, 'C012', 'Tes', 'L', 'Jember', '2003-05-08', 'tes@gmail.com', 1);
+(1, 'C001', 'Khoirul Akhi', 'L', 'Jember', '1999-12-22', 'khoirul@gmail.com', 1),
+(2, 'C002', 'Dida', 'L', 'Jember', '1998-12-31', 'dida@gmail.com', 3),
+(3, 'C003', 'Masya', 'P', 'Jember', '2001-03-31', 'masya@gmail.com', 4);
 
 -- --------------------------------------------------------
 
@@ -128,20 +119,6 @@ INSERT INTO `pembayaran` (`id`, `nokuitansi`, `tanggal`, `jumlah`, `ke`, `pesana
 (1, 'KI001', '2023-03-10', 11000, 1, 11, 'lunas'),
 (2, 'KI002', '2023-09-12', 4000, 2, 12, 'belum lunas'),
 (5, 'KI003', '2023-09-12', 5000, 2, 12, 'lunas');
-
---
--- Triggers `pembayaran`
---
-DELIMITER $$
-CREATE TRIGGER `set_status_pembayaran` BEFORE INSERT ON `pembayaran` FOR EACH ROW BEGIN
-    DECLARE total DOUBLE;
-    SELECT SUM(qty * harga) INTO total FROM pesanan_items WHERE pesanan_id = NEW.pesanan_id;
-    IF NEW.jumlah >= total THEN
-        SET NEW.status_pembayaran = 'lunas';
-    END IF;
-END
-$$
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -188,18 +165,8 @@ CREATE TABLE `pesanan` (
 --
 
 INSERT INTO `pesanan` (`id`, `tanggal`, `total`, `pelanggan_id`) VALUES
-(1, '2015-11-04', 26000000, 1),
-(2, '2015-11-04', 17500, 3),
-(3, '2015-11-04', 5000, 6),
-(4, '2015-11-04', 0, 7),
-(5, '2015-11-04', 0, 10),
-(6, '2015-11-04', 0, 2),
-(7, '2015-11-04', 0, 5),
-(8, '2015-11-04', 0, 4),
-(9, '2015-11-04', 0, 8),
-(10, '2015-11-04', 0, 9),
-(11, '2023-05-10', 10500, 11),
-(12, '2023-09-12', 5000, 11);
+(1, '2023-05-08', 3800000, 3),
+(2, '2023-04-05', 2000000, 1);
 
 -- --------------------------------------------------------
 
@@ -220,10 +187,8 @@ CREATE TABLE `pesanan_items` (
 --
 
 INSERT INTO `pesanan_items` (`id`, `produk_id`, `pesanan_id`, `qty`, `harga`) VALUES
-(1, 10, 1, 2, 13000000),
-(2, 7, 3, 2, 2500),
-(3, 5, 11, 3, 3500),
-(5, 7, 12, 2, 2500);
+(1, 1, 1, 1, 3800000),
+(2, 1, 2, 1, 2000000);
 
 --
 -- Triggers `pesanan_items`
@@ -302,17 +267,15 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id`, `kode`, `nama`, `harga_beli`, `harga_jual`, `stok`, `min_stok`, `jenis_produk_id`) VALUES
-(1, 'TV01', 'Televisi 21 inch', 3500000, 5040000, 5, 2, 1),
-(2, 'TV02', 'Televisi 40 inch', 5500000, 7440000, 4, 2, 1),
-(3, 'K001', 'Kulkas 2 pintu', 3500000, 4680000, 6, 2, 1),
-(4, 'M001', 'Meja Makan', 500000, 600000, 4, 3, 2),
-(5, 'TK01', 'Teh Kotak', 3000, 3500, 37, 10, 4),
-(6, 'PC01', 'PC Desktop HP', 7000000, 9600000, 9, 2, 5),
-(7, 'TB01', 'Teh Botol', 2000, 2500, 51, 10, 4),
-(8, 'AC01', 'Notebook Acer', 8000000, 10800000, 7, 2, 5),
-(9, 'LN01', 'Notebook Lenovo', 9000000, 12000000, 9, 2, 5),
-(10, 'L004', 'Laptop HP', 12000000, 13000000, 18, 5, 5),
-(11, 'TV03', 'LG 22 inch', 2000000, 3000000, 5, 2, 1);
+(1, 'GPU01', 'ZOTAC GeForce® GTX 1050 Ti Mini', 1500000, 2000000, 28, 1, 5),
+(2, 'GPU02', 'ROG Strix GeForce RTX 2060 EVO V2 OC Edition ', 3000000, 3800000, 30, 1, 5),
+(3, 'GPU03', 'GeForce GTX 1650 GAMING X 4G', 2100000, 2300000, 30, 1, 5),
+(4, 'HP01', 'Apple iPhone 11 Pro', 6000000, 7000000, 30, 1, 1),
+(5, 'HP02', 'Apple iPhone 12 Pro', 7000000, 9000000, 32, 1, 1),
+(6, 'TP01', 'Teh Pucuk', 2000, 3000, 65, 1, 4),
+(7, 'MNT01', 'Lenovo D21', 1800000, 2200000, 21, 1, 5),
+(8, 'HS01', 'dbE DJ80', 200000, 250000, 20, 1, 1),
+(9, 'HS02', 'dbE GM500', 300000, 350000, 22, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -346,7 +309,7 @@ INSERT INTO `vendor` (`id`, `nomor`, `nama`, `kota`, `kontak`) VALUES
 --
 DROP TABLE IF EXISTS `pesanan_produk_vw`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `pesanan_produk_vw`  AS SELECT `p`.`id` AS `pesanan_id`, `pe`.`nama` AS `pelanggan_nama`, `pe`.`email` AS `pelanggan_email`, `pr`.`nama` AS `produk_nama`, `pr`.`harga_beli` AS `harga_beli`, `pr`.`harga_jual` AS `harga_jual`, `pi`.`qty` AS `qty`, `pi`.`harga` AS `harga` FROM (((`pesanan` `p` join `pelanggan` `pe` on(`p`.`pelanggan_id` = `pe`.`id`)) join `pesanan_items` `pi` on(`p`.`id` = `pi`.`pesanan_id`)) join `produk` `pr` on(`pi`.`produk_id` = `pr`.`id`))  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `pesanan_produk_vw`  AS SELECT `p`.`id` AS `pesanan_id`, `pe`.`nama` AS `pelanggan_nama`, `pe`.`email` AS `pelanggan_email`, `pr`.`nama` AS `produk_nama`, `pr`.`harga_beli` AS `harga_beli`, `pr`.`harga_jual` AS `harga_jual`, `pi`.`qty` AS `qty`, `pi`.`harga` AS `harga` FROM (((`pesanan` `p` join `pelanggan` `pe` on(`p`.`pelanggan_id` = `pe`.`id`)) join `pesanan_items` `pi` on(`p`.`id` = `pi`.`pesanan_id`)) join `produk` `pr` on(`pi`.`produk_id` = `pr`.`id`)) ;
 
 --
 -- Indexes for dumped tables
@@ -370,9 +333,7 @@ ALTER TABLE `kartu`
 --
 ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_pelanggan_kartu1_idx` (`kartu_id`),
-  ADD KEY `idx_nama_pelanggan` (`nama`),
-  ADD KEY `idx_tgllahir_pelanggan` (`tgl_lahir`);
+  ADD KEY `fk_pelanggan_kartu1` (`kartu_id`);
 
 --
 -- Indexes for table `pembayaran`
@@ -435,13 +396,13 @@ ALTER TABLE `jenis_produk`
 -- AUTO_INCREMENT for table `kartu`
 --
 ALTER TABLE `kartu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pembayaran`
@@ -459,19 +420,19 @@ ALTER TABLE `pembelian`
 -- AUTO_INCREMENT for table `pesanan`
 --
 ALTER TABLE `pesanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pesanan_items`
 --
 ALTER TABLE `pesanan_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `vendor`
@@ -513,7 +474,7 @@ ALTER TABLE `pesanan`
 --
 ALTER TABLE `pesanan_items`
   ADD CONSTRAINT `fk_pesanan_items_pesanan1` FOREIGN KEY (`pesanan_id`) REFERENCES `pesanan` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_pesanan_items_produk1` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_pesanan_items_produk1` FOREIGN KEY (`produk_id`) REFERENCES `produk` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `produk`
