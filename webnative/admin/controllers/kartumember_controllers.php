@@ -4,28 +4,29 @@ include_once '../models/Data_Kartu.php';
 
 $model = new DataKartu();
 
-if(isset($_POST['addKartu'])){
-    $kodeKartu = $_POST['kodeKartu'];
-    $namaKartu = $_POST['namaKartu'];
-    $diskon = $_POST['diskon'];
-    $iuran = $_POST['iuran'];
+$kode = $_POST['kode'];
+$nama = $_POST['nama'];
+$diskon = $_POST['diskon'];
+$iuran = $_POST['iuran'];
 
-    $data = [
-        $kodeKartu,
-        $namaKartu,
-        $diskon,
-        $iuran
-    ];
+$data = [
+    $kode,
+    $nama,
+    $diskon,
+    $iuran
+];
 
-    $addData = $model->setKartu($data);
-
-    if($addData) {
-        header('location:../index.php?url=kartupelanggan');
-    } else {
-        header('location:../index.php?url=kartupelanggan');
-    }
-    
-} else {
+$Btn = $_REQUEST['proses'];
+switch($Btn){
+    case 'setKartu':$model->setKartu($data); break;
+    case 'updateKartu':
+        $data[] = $_POST['idp']; $model->updateKartu($data); break;
+    case 'deleteKartu':
+        unset($data); $model->deleteKartu($_POST['idp']); break;
+    default:
     header('location:../index.php?url=kartupelanggan');
+    break;
 }
+header('location:../index.php?url=kartupelanggan');
+
 ?>

@@ -3,9 +3,9 @@
 // include_once 'menu.php';
 
 $model = new DataPelanggan();
-$modelKartuMembership = new DataKartu();
 $data_pelanggan = $model->dataPelanggan();
-$model_kartuMembership = $modelKartuMembership->dataKartu();
+$model_kartu = new DataKartu();
+$data_kartu = $model_kartu->dataKartu();
 
 // foreach ($data_produk as $row){
 //     print $row['kode'];
@@ -24,47 +24,11 @@ $model_kartuMembership = $modelKartuMembership->dataKartu();
         .
     </div>
 </div>
-<!-- Modal Tambah Pelanggan -->
-<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+
+<a href="index.php?url=pelanggan_form" class="btn btn-primary mb-2">
   Tambah Pelanggan
-</button>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Pelanggan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="controllers/pelanggan_controllers.php" method="POST">
-                <div class="modal-body">
-                    <input type="text" name="kodePelanggan" id="kodePelanggan" placeholder="Kode Pelanggan" class="form-control mb-3">
-                    <input type="text" name="namaPelanggan" id="namaPelanggan" placeholder="Nama Pelanggan" class="form-control mb-3">
-                    <select name="jenisKelamin" id="jenisKelamin" class="form-control mb-3">
-                        <option value="" disabled selected>Pilih Jenis Kelamin</option>
-                        <option value="L">Laki-Laki</option>
-                        <option value="P">Perempuan</option>
-                    </select>
-                    <input type="text" name="tempatLahir" id="tempatLahir" placeholder="Tempat Lahir" class="form-control mb-3">
-                    <input required="" type="text" name="tanggalLahir" class="form-control mb-3" placeholder="Tanggal Lahir" onfocus="(this.type='date')"/>
-                    <input type="email" name="emailPelanggan" id="emailPelanggan" placeholder="Email" class="form-control mb-3" required>
-                    <select name="kartuMembership" id="kartuMembership" class="form-control mb-3" placeholder="Kartu Membership">
-                        <option value="" disabled selected>Pilih Kartu Membership</option>
-                        <?php 
-                            $kartuMember = $modelKartuMembership->dataKartu();
-                            foreach($kartuMember as $km){
-                                echo '<option value="'.$km['id'].'">'.$km['nama'].'</option>';
-                            }
-                        ?>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" name="addtoPelanggan" value="setPelanggan">Submit</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Modal Tambah Pelanggan -->
+</a>
+
 <div class="card mb-4">
     <div class="card-body">
         <table id="datatablesSimple">
@@ -78,6 +42,7 @@ $model_kartuMembership = $modelKartuMembership->dataKartu();
                     <th>Tanggal Lahir</th>
                     <th>Email</th>
                     <th>Membership</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tfoot>
@@ -90,6 +55,7 @@ $model_kartuMembership = $modelKartuMembership->dataKartu();
                     <th>Tanggal Lahir</th>
                     <th>Email</th>
                     <th>Membership</th>
+                    <th>Action</th>
                 </tr>
             </tfoot>
             <tbody>
@@ -106,7 +72,15 @@ $model_kartuMembership = $modelKartuMembership->dataKartu();
                     <td><?= $row['tgl_lahir'] ?></td>
                     <td><?= $row['email'] ?></td>
                     <td><?= $row['jenis_kartu'] ?></td>
-                    
+                    <td>
+                        <form action="controllers/pelanggan_controllers.php" method="POST"> 
+                            <a href="" class="btn btn-info btn-sm">Detail</a>
+                            <a href="index.php?url=pelanggan_form&idedit=<?=$row['id']?>" class="btn btn-secondary btn-sm">Edit</a>
+                            <button type="submit" class="btn btn-danger btn-sm" name="proses" value="deletePelanggan" onclick="return confirm('Apakah anda yakin?')">Delete</button>
+
+                            <input type="hidden" name="idp" value="<?=$row['id']?>">
+                        </form> 
+                    </td>   
                 </tr>
                 <?php 
                 $no++;

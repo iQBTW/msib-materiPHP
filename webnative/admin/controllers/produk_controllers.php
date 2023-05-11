@@ -4,66 +4,35 @@ include_once '../models/Produk.php';
 
 $model = new Produk();
 
-if(isset($_POST['addtoProduk'])){
-    $kodeProduk = $_POST['kodeProduk'];
-    $namaProduk = $_POST['namaProduk'];
-    $hargaBeli = $_POST['hargaBeli'];
-    $hargaJual = $_POST['hargaJual'];
-    $stokProduk = $_POST['stok'];
-    $minStokProduk = $_POST['minStok'];
-    $jenisProduk = $_POST['jenisProduk'];
+$kode = $_POST['kode'];
+$nama = $_POST['nama'];
+$harga_beli = $_POST['harga_beli'];
+$harga_jual = $_POST['harga_jual'];
+$stok = $_POST['stok'];
+$min_stok = $_POST['min_stok'];
+$jenis_produk_id = $_POST['jenis_produk_id'];
 
-    $data = [
-        $kodeProduk,
-        $namaProduk,
-        $hargaBeli,
-        $hargaJual,
-        $stokProduk,
-        $minStokProduk,
-        $jenisProduk
-    ];
+$data = [
+    $kode,
+    $nama,
+    $harga_beli,
+    $harga_jual,
+    $stok,
+    $min_stok,
+    $jenis_produk_id
+];
 
-    $addData = $model->setProduk($data);
-
-    if($addData) {
-        header('location:../index.php?url=product');
-    } else {
-        header('location:../index.php?url=product');
-    }
-    
-} else {
+$Btn = $_REQUEST['proses'];
+switch($Btn){
+    case 'setProduk':$model->setProduk($data); break;
+    case 'updateProduk':
+        $data[] = $_POST['idp']; $model->updateProduk($data); break;
+    case 'deleteProduk':
+        unset($data); $model->deleteProduk($_POST['idp']); break;
+    default:
     header('location:../index.php?url=product');
+    break;
 }
+header('location:../index.php?url=product');
 
-if(isset($_POST['editProduk'])){
-    $idProduk = $_POST['id'];
-    $kodeProduk = $_POST['kodeProduk'];
-    $namaProduk = $_POST['namaProduk'];
-    $hargaBeli = $_POST['hargaBeli'];
-    $hargaJual = $_POST['hargaJual'];
-    $stokProduk = $_POST['stok'];
-    $minStokProduk = $_POST['minStok'];
-    $jenisProduk = $_POST['jenisProduk'];
-
-    $data = [
-        $kodeProduk,
-        $namaProduk,
-        $hargaBeli,
-        $hargaJual,
-        $stokProduk,
-        $minStokProduk,
-        $jenisProduk
-    ];
-
-    $editData = $model->updateProduk($data, $idProduk);
-
-    if($editData){
-        header('location:../index.php?url=product');
-    } else {
-        header('location:../index.php?url=product');
-    }
-
-} else {
-    header('location:index.php?url=product');
-}
 ?>

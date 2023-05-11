@@ -25,40 +25,7 @@ $modelDataProduk = new Produk();
     </div>
 </div>
 
-<!-- Modal Tambah Pesanan -->
-<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Tambah Pesanan
-</button>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Pesanan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="controllers/pesanan_controllers.php" method="POST">
-                <div class="modal-body">
-                    <select name="idProduk" id="idProduk" placeholder="Pilih Produk" class="form-control mb-3">
-                        <option value="" disabled>Pilih Produk</option>
-                        <?php
-                            $namaProduk = $modelDataProduk->dataProduk();
-                            foreach($namaProduk as $np){
-                                echo '<option value="'.$np['id'].'">'.$np['nama'].'</option>';
-                            }
-                        ?>
-                    </select>
-                    <input type="number" name="idPesanan" id="idPesanan" placeholder="ID Pesanan" class="form-control mb-3">
-                    <input type="number" name="qty" id="qty" placeholder="Quantity" class="form-control mb-3">
-                    <input type="number" name="harga" id="harga" placeholder="Harga" class="form-control mb-3">
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" name="addPesanan" value="setPesanan">Submit</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Modal Tambah Pesanan -->
+<a href="index.php?url=pesanan_form" class="btn btn-primary mb-2">Tambah Produk</a>
 
 <div class="card mb-4">
     <div class="card-body">
@@ -72,6 +39,7 @@ $modelDataProduk = new Produk();
                     <th>Quantity</th>
                     <th>Harga</th>
                     <th>Total Harga</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tfoot>
@@ -83,6 +51,7 @@ $modelDataProduk = new Produk();
                     <th>Quantity</th>
                     <th>Harga</th>
                     <th>Total Harga</th>
+                    <th>Action</th>
                 </tr>
             </tfoot>
             <tbody>
@@ -98,6 +67,15 @@ $modelDataProduk = new Produk();
                     <td><?= $row['qty'] ?></td>
                     <td><?= $row['harga'] ?></td>
                     <td><?= $row['total'] ?></td>
+                    <td>
+                        <form action="controllers/pesanan_controllers.php" method="POST"> 
+                            <a href="" class="btn btn-info btn-sm">Detail</a>
+                            <a href="index.php?url=pesanan_form&idedit=<?=$row['id']?>" class="btn btn-secondary btn-sm">Edit</a>
+                            <button type="submit" class="btn btn-danger btn-sm" name="proses" value="deletePesanan" onclick="return confirm('Apakah anda yakin?')">Delete</button>
+
+                            <input type="hidden" name="idp" value="<?=$row['id']?>">
+                        </form> 
+                    </td>
                 </tr>
                 <?php 
                 $no++;

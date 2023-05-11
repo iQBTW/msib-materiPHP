@@ -58,6 +58,7 @@ $data_kartu = $model->dataKartu();
                     <th>Nama</th>
                     <th>Diskon</th>
                     <th>Iuran</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tfoot>
@@ -67,6 +68,7 @@ $data_kartu = $model->dataKartu();
                     <th>Nama</th>
                     <th>Jenis Kelamin</th>
                     <th>Tempat Lahir</th>
+                    <th>Action</th>
                 </tr>
             </tfoot>
             <tbody>
@@ -80,6 +82,15 @@ $data_kartu = $model->dataKartu();
                     <td><?= $row['nama'] ?></td>
                     <td><?= $row['diskon'] ?></td>
                     <td><?= $row['iuran'] ?></td>
+                    <td>
+                        <form action="controllers/kartumember_controllers.php" method="POST"> 
+                            <a href="" class="btn btn-info btn-sm">Detail</a>
+                            <a href="index.php?url=kartu_form&idedit=<?=$row['id']?>" class="btn btn-secondary btn-sm">Edit</a>
+                            <button type="submit" class="btn btn-danger btn-sm" name="proses" value="deleteProduk" onclick="return confirm('Apakah anda yakin?')">Delete</button>
+
+                            <input type="hidden" name="idp" value="<?=$row['id']?>">
+                        </form>    
+                    </td>
                 </tr>
                 <?php 
                 $no++;

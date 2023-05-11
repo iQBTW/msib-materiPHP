@@ -13,10 +13,27 @@ class DataKartu{
         $rs = $ps->fetchAll();
         return $rs;
     }
+    public function getKartu($id){
+        $sql = "SELECT * FROM kartu WHERE kartu.id=?";
+        $ps = $this->koneksi->prepare($sql);
+        $ps->execute([$id]);
+        $rs = $ps->fetch();
+        return $rs;
+    }
     public function setKartu($data){
         $sql = "INSERT INTO kartu (kode, nama, diskon, iuran) VALUES (?,?,?,?)";
         $ps = $this->koneksi->prepare($sql);
         $ps->execute($data);
+    }
+    public function updateKartu($data){
+        $sql = "UPDATE kartu SET kode=?, nama=?, diskon=?, iuran=? WHERE id=?";
+        $ps = $this->koneksi->prepare($sql);
+        $ps->execute($data);
+    }
+    public function deleteKartu($id){
+        $sql = "DELETE FROM kartu WHERE id=?";
+        $ps = $this->koneksi->prepare($sql);
+        $ps->execute($id);
     }
 }
 ?>
