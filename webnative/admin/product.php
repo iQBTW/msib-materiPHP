@@ -3,9 +3,10 @@
 // include_once 'menu.php';
 
 $model = new Produk();
-$obj_Produk = new Produk();
+$model_jenis_produk = new JenisProduk();
+// $obj_Produk = new Produk();
 $data_produk = $model->dataProduk();
-$set_data_produk = $model->setProduk($data);
+// $set_data_produk = $model->setProduk($data);
 
 // foreach ($data_produk as $row){
 //     print $row['kode'];
@@ -24,43 +25,48 @@ $set_data_produk = $model->setProduk($data);
         .
     </div>
 </div>
-<div class="card mb-4">
-    <!-- <div class="card-header">
-        <i class="fas fa-table me-1"></i>
-        DataTable Example
-    </div> -->
-    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#TambahProduk">
   Tambah Produk
 </button>
+<div class="card mb-4">
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Produk</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form action="controllers/produk_controllers.php" method="POST">
-        <div class="modal-body">
-            <input type="text" name="kodeProduk" id="kodeProduk" placeholder="Kode Produk" class="form-control mb-2">
-            <input type="text" name="namaProduk" id="namaProduk" placeholder="Nama Produk" class="form-control mb-2">
-            <input type="number" name="hargaBeli" id="hargaBeli" placeholder="Harga Beli" class="form-control mb-2">
-            <input type="number" name="hargaJual" id="hargaJual" placeholder="Harga Jual" class="form-control mb-2">
-            <input type="number" name="stok" id="stok" placeholder="Stock Barang" class="form-control mb-2" required>
-            <input type="number" name="minStok" id="minStok" placeholder="Minimal Stock Barang" class="form-control mb-2" required>
-            <input type="number" name="jenisProduk" id="jenisProduk" placeholder="Kategori Barang" class="form-control mb-2" required>
+    <div class="modal fade" id="TambahProduk" tabindex="-1" aria-labelledby="TambahProdukLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="TambahProdukLabel">Tambah Produk</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-      
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" name="addtoProduk">Submit</button>
+        <form action="controllers/produk_controllers.php" method="POST">
+            <div class="modal-body">
+                <input type="text" name="kodeProduk" id="kodeProduk" placeholder="Kode Produk" class="form-control mb-2">
+                <input type="text" name="namaProduk" id="namaProduk" placeholder="Nama Produk" class="form-control mb-2">
+                <input type="number" name="hargaBeli" id="hargaBeli" placeholder="Harga Beli" class="form-control mb-2">
+                <input type="number" name="hargaJual" id="hargaJual" placeholder="Harga Jual" class="form-control mb-2">
+                <input type="number" name="stok" id="stok" placeholder="Stock Barang" class="form-control mb-2" required>
+                <input type="number" name="minStok" id="minStok" placeholder="Minimal Stock Barang" class="form-control mb-2" required>
+                <select name="jenisProduk" id="jenisProduk" class="form-control">
+                    <option value="" disabled selected>Pilih Jenis Produk</option>
+                    <?php 
+                    $data_jenis_produk = $model_jenis_produk->JenisProduk();
+                    foreach($data_jenis_produk as $jp ){
+                        echo '<option value="'.$jp['id'].'">'.$jp['nama'].'</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+        
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" name="proses" value="setProduk">Submit</button>
+            </div>
+        </form>
         </div>
-      </form>
     </div>
-  </div>
-</div>
+    </div>
+    
 <div class="card-body">
     <table id="datatablesSimple">
         <thead>
@@ -73,6 +79,7 @@ $set_data_produk = $model->setProduk($data);
                 <th>Stok</th>
                 <th>Minimal Stok</th>
                 <th>Jenis Produk</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tfoot>
@@ -85,6 +92,7 @@ $set_data_produk = $model->setProduk($data);
                 <th>Stok</th>
                 <th>Minimal Stok</th>
                 <th>Jenis Produk</th>
+                <th>Action</th>
             </tr>
         </tfoot>
         <tbody>
@@ -101,7 +109,16 @@ $set_data_produk = $model->setProduk($data);
                 <td><?= $row['stok'] ?></td>
                 <td><?= $row['min_stok'] ?></td>
                 <td><?= $row['Kategori'] ?></td>
-                
+                <td>
+                    <form action="controllers/produk_controllers.php" method="POST">
+                        <a href="#" class="btn btn-info btn-sm">Details</a>
+                        <a href="index.php?url=product_form&idedit=<?=$row['id']?>" class="btn btn-secondary btn-sm">Edit</a>
+                        <button class="btn btn-danger btn-sm" type="submit" name="proses" value="deleteProduk" onclick="return confirm('Gak bahaya ta?')">Delete</button>
+
+                        <input type="hidden" name="idp" value="<?=$row['id']?>">
+                    </form>
+                </td>
+
             </tr>
             <?php 
             $no++;

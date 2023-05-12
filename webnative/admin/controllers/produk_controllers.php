@@ -2,7 +2,9 @@
 include_once '../koneksidb.php';
 include_once '../models/Produk.php';
 
-if(isset($_POST['addtoProduk'])){
+$model = new Produk();
+
+if(isset($_POST['kodeProduk'] )){
     $kodeProduk = $_POST['kodeProduk'];
     $namaProduk = $_POST['namaProduk'];
     $hargaBeli = $_POST['hargaBeli'];
@@ -12,23 +14,26 @@ if(isset($_POST['addtoProduk'])){
     $jenisProduk = $_POST['jenisProduk'];
 
     $data = [
-        $kode,
-        $nama,
-        $harga_beli,
-        $harga_jual,
-        $stok,
-        $min_stok,
-        $jenis_produk_id
+        $kodeProduk,
+        $namaProduk,
+        $hargaBeli,
+        $hargaJual,
+        $stokProduk,
+        $minStokProduk,
+        $jenisProduk
     ];
-
-    $model = new Produk();
-    $setBtn = $_REQUEST['addToProduk'];
-    switch($setBtn){
+}
+    $Btn = $_REQUEST['proses'];
+    switch($Btn){
         case 'setProduk' : $model->setProduk($data); break;
+        case 'updateProduk' :
+            $data[] = $_POST['idp']; $model->updateProduk($data); break;
+        case 'deleteProduk' :
+            unset($data); $model->deleteProduk($_POST['idp']); break;
         default:
-        header('location:index.php?url=product');
+        header('location:../index.php?url=product');
         break;
     }
-    header('location:index.php?url=product');
-}
+    header('location:../index.php?url=product');
+
 ?>
