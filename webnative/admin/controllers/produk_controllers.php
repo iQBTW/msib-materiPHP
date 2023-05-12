@@ -23,17 +23,17 @@ if(isset($_POST['kodeProduk'] )){
         $jenisProduk
     ];
 }
-    $Btn = $_REQUEST['proses'];
-    switch($Btn){
-        case 'setProduk' : $model->setProduk($data); break;
-        case 'updateProduk' :
-            $data[] = $_POST['idp']; $model->updateProduk($data); break;
-        case 'deleteProduk' :
-            unset($data); $model->deleteProduk($_POST['idp']); break;
-        default:
-        header('location:../index.php?url=product');
-        break;
-    }
+$Btn = $_REQUEST['proses'];
+switch($Btn){
+    case 'setProduk' : $model->setProduk($data); break;
+    case 'updateProduk' :
+        $data[] = $_POST['idp']; $model->updateProduk($data); break;
+    case 'deleteProduk' :
+        unset($data); $model->deleteProduk($_POST['idp']); break;
+    default:
     header('location:../index.php?url=product');
+    break;
+}
+header('location:../index.php?url=product');
 
 ?>

@@ -4,7 +4,7 @@
 $obj_produk = new Produk();
 $data_produk = $obj_produk->dataProduk();
 $idedit = $_REQUEST['idedit'];
-$prod = $obj_produk->getProduk($idedit) ;
+$prod = $obj_produk->getProduk($idedit);
 
 ?>
 <form action="controllers/produk_controllers.php" method="POST">
