@@ -91,7 +91,7 @@ if($sesi['role'] != 'staff'){
                     <td><?= $row['iuran'] ?></td>
                     <td>
                         <form action="controllers/kartumember_controllers.php" method="POST"> 
-                            <a href="index.php?url=kartu_details&id=<?=$row['id']?>" class="btn btn-info btn-sm">Detail</a>
+                            <a href="index.php?url=kartu_details&id=<?=$row['id']?>" class="btn btn-info btn-sm">Details</a>
 
                             <?php 
                             if($sesi['role'] == 'admin'){

@@ -111,7 +111,7 @@ if($sesi['role'] != 'staff'){
                         <td><?= $row['total'] ?></td>
                         <td>
                             <form action="controllers/pesanan_controllers.php" method="POST"> 
-                                <a href="index.php?url=pesanan_details&id=<?=$row['id']?>" class="btn btn-info btn-sm">Detail</a>
+                                <a href="index.php?url=pesanan_details&id=<?=$row['id']?>" class="btn btn-info btn-sm">Details</a>
                                 <?php 
                                 if($sesi['role'] == 'admin'){
                                 ?>
