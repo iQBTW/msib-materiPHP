@@ -5,9 +5,10 @@
 $model = new Datakartu();
 $data_kartu = $model->dataKartu();
 
-// foreach ($data_produk as $row){
-//     print $row['kode'];
-// }
+$sesi = $_SESSION['MEMBER'];
+if(isset($sesi)){
+
+
 
 ?>
 <h1 class="mt-4">Data Kartu Membership</h1>
@@ -22,10 +23,15 @@ $data_kartu = $model->dataKartu();
         .
     </div>
 </div>
+
+<?php 
+if($sesi['role'] != 'staff'){
+?>
 <!-- Modal Tambah Kartu Pelanggan -->
 <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#modalKartuPelanggan">
   Tambah Kartu Membership
 </button>
+<?php } ?>
 
 <div class="modal fade" id="modalKartuPelanggan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalKartuPelangganLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -86,10 +92,15 @@ $data_kartu = $model->dataKartu();
                     <td>
                         <form action="controllers/kartumember_controllers.php" method="POST"> 
                             <a href="" class="btn btn-info btn-sm">Detail</a>
+
+                            <?php 
+                            if($sesi['role'] == 'admin'){
+                            ?>
                             <a href="index.php?url=kartu_form&idedit=<?=$row['id']?>" class="btn btn-secondary btn-sm">Edit</a>
                             <button type="submit" class="btn btn-danger btn-sm" name="proses" value="deleteKartu" onclick="return confirm('Apakah anda yakin?')">Delete</button>
 
                             <input type="hidden" name="idp" value="<?=$row['id']?>">
+                            <?php } ?>
                         </form>    
                     </td>
                 </tr>
@@ -103,6 +114,9 @@ $data_kartu = $model->dataKartu();
 </div>
 </div>
 
-                <?php
-        // include_once 'bottom.php';
-                ?>
+<?php
+// include_once 'bottom.php';
+} else {
+    echo '<script> alert("Silahkan login!");window.location.href="../index.php?hal=admin/login";</script>';
+}
+?>

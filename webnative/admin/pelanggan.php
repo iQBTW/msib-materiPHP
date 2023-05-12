@@ -6,9 +6,10 @@ $model = new DataPelanggan();
 $data_pelanggan = $model->dataPelanggan();
 $model_kartu = new DataKartu();
 
-// foreach ($data_produk as $row){
-//     print $row['kode'];
-// }
+$sesi = $_SESSION['MEMBER'];
+if(isset($sesi)){
+
+
 
 ?>
 <h1 class="mt-4">Data Pelanggan</h1>
@@ -24,10 +25,14 @@ $model_kartu = new DataKartu();
     </div>
 </div>
 
+<?php 
+if($sesi['role'] != 'staff'){
+?>
 <!-- Button modal -->
 <button type="button" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#TambahPelanggan">
   Tambah Pelanggan
 </button>
+<?php } ?>
 
 <div class="card mb-4">
     <!-- Modal -->
@@ -115,10 +120,16 @@ $model_kartu = new DataKartu();
                     <td>
                         <form action="controllers/pelanggan_controllers.php" method="POST"> 
                             <a href="" class="btn btn-info btn-sm">Detail</a>
+                            <?php 
+                            if($sesi['role'] == 'admin'){
+
+                            
+                            ?>
                             <a href="index.php?url=pelanggan_form&idedit=<?=$row['id']?>" class="btn btn-secondary btn-sm">Edit</a>
                             <button type="submit" class="btn btn-danger btn-sm" name="proses" value="deletePelanggan" onclick="return confirm('Apakah anda yakin?')">Delete</button>
 
                             <input type="hidden" name="idp" value="<?=$row['id']?>">
+                            <?php } ?>
                         </form> 
                     </td>   
                 </tr>
@@ -133,6 +144,9 @@ $model_kartu = new DataKartu();
 </div>
 </div>
 
-                <?php
-        // include_once 'bottom.php';
-                ?>
+<?php
+} else {
+    echo '<script> alert("Silahkan login!");window.location.href="../index.php?hal=admin/login";</script>';
+}
+// include_once 'bottom.php';
+?>

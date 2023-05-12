@@ -4,9 +4,10 @@
 
 $model = new Produk();
 $model_jenis_produk = new JenisProduk();
-// $obj_Produk = new Produk();
 $data_produk = $model->dataProduk();
-// $set_data_produk = $model->setProduk($data);
+
+$sesi = $_SESSION['MEMBER'];
+if(isset($sesi)){
 
 
 ?>
@@ -23,10 +24,13 @@ $data_produk = $model->dataProduk();
     </div>
 </div>
 <!-- Button modal -->
+<?php 
+    if($sesi['role'] != 'staff'){
+?>
 <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#TambahProduk">
   Tambah Produk
 </button>
-
+<?php } ?>
 <div class="card mb-4">
     <!-- Modal -->
     <div class="modal fade" id="TambahProduk" tabindex="-1" aria-labelledby="TambahProdukLabel" aria-hidden="true">
@@ -109,10 +113,14 @@ $data_produk = $model->dataProduk();
                     <td>
                         <form action="controllers/produk_controllers.php" method="POST">
                             <a href="#" class="btn btn-info btn-sm">Details</a>
+                            <?php 
+                                if($sesi['role'] == 'admin'){
+                            ?>
                             <a href="index.php?url=product_form&idedit=<?=$row['id']?>" class="btn btn-secondary btn-sm">Edit</a>
                             <button class="btn btn-danger btn-sm" type="submit" name="proses" value="deleteProduk" onclick="return confirm('Gak bahaya ta?')">Delete</button>
 
                             <input type="hidden" name="idp" value="<?=$row['id']?>">
+                            <?php } ?>
                         </form>
                     </td>
 
@@ -128,5 +136,8 @@ $data_produk = $model->dataProduk();
 </div>
 
 <?php
+} else {
+    echo '<script> alert("Silahkan login!");window.location.href="../index.php?hal=admin/login";</script>';
+}
 // include_once 'bottom.php';
 ?>

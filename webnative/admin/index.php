@@ -1,11 +1,19 @@
 <?php
-//memanggil dan memproses file bagian atas
+
+session_start();
+
 include_once 'koneksidb.php';
+include_once 'models/Member.php';
 include_once 'models/Produk.php';
 include_once 'models/Jenis_Produk.php';
 include_once 'models/Data_Pelanggan.php';
 include_once 'models/Data_Pesanan.php';
 include_once 'models/Data_Kartu.php';
+
+$sesi = $_SESSION['MEMBER'];
+if(isset($sesi)){
+
+//memanggil dan memproses file bagian atas
 include_once 'top.php';
 //memanggil dan memproses file bagian menu
 include_once 'menu.php';
@@ -15,11 +23,11 @@ include_once 'menu.php';
         <div class="container-fluid px-4">
             <?php 
             //algoritma menangkap url agar masuk kedalam index
-            $url = isset($_GET['url'])?$_GET['url']:'dashboard';
+            $url = isset($_GET['url']) ? $_GET['url']:'dashboard';
             if($url == 'dashboard'){
                 include_once 'dashboard.php';
             } else if (!empty($url)){
-                include_once ''.$url.'.php';
+                include_once $url.'.php';
             } else { 
                 include_once 'dashboard.php';   
             }
@@ -31,4 +39,8 @@ include_once 'menu.php';
 <?php
 //memanggil file bagian bawah
 include_once 'bottom.php';
+
+} else {
+    echo '<script> alert("Silahkan login!");window.location.href="../index.php?hal=admin/login";</script>';
+}
 ?>

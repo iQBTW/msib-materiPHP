@@ -6,6 +6,10 @@ $model = new DataPesanan();
 $model_data_produk = new Produk();
 $data_pesanan = $model->dataPesanan();
 
+$sesi = $_SESSION['MEMBER'];
+if(isset($sesi)){
+
+
 
 // foreach ($data_produk as $row){
 //     print $row['kode'];
@@ -25,9 +29,14 @@ $data_pesanan = $model->dataPesanan();
     </div>
 </div>
 <!-- Button modal -->
+<?php 
+if($sesi['role'] != 'staff'){
+?>
 <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#TambahPesanan">
   Tambah Pesanan
 </button>
+<?php } ?>
+
 <div class="card mb-4">
     <div class="modal fade" id="TambahPesanan" tabindex="-1" aria-labelledby="TambahPesananLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -103,10 +112,14 @@ $data_pesanan = $model->dataPesanan();
                         <td>
                             <form action="controllers/pesanan_controllers.php" method="POST"> 
                                 <a href="" class="btn btn-info btn-sm">Detail</a>
+                                <?php 
+                                if($sesi['role'] == 'admin'){
+                                ?>
                                 <a href="index.php?url=pesanan_form&idedit=<?=$row['id']?>" class="btn btn-secondary btn-sm">Edit</a>
                                 <button type="submit" class="btn btn-danger btn-sm" name="proses" value="deletePesanan" onclick="return confirm('Apakah anda yakin?')">Delete</button>
 
                                 <input type="hidden" name="idp" value="<?=$row['id']?>">
+                                <?php } ?>
                             </form> 
                         </td>
                     </tr>
@@ -120,6 +133,10 @@ $data_pesanan = $model->dataPesanan();
     </div>
 </div>
 
-                <?php
-        // include_once 'bottom.php';
-                ?>
+<?php
+// include_once 'bottom.php';
+} else {
+    '<script> alert("Silahkan login!");window.location.href="../index.php?hal=admin/login";</script>';
+}
+
+?>
