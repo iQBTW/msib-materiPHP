@@ -119,7 +119,7 @@ if($sesi['role'] != 'staff'){
                     <td><?= $row['jenis_kartu'] ?></td>
                     <td>
                         <form action="controllers/pelanggan_controllers.php" method="POST"> 
-                            <a href="" class="btn btn-info btn-sm">Detail</a>
+                            <a href="index.php?url=pelanggan_details&id=<?=$row['id']?>" class="btn btn-info btn-sm">Detail</a>
                             <?php 
                             if($sesi['role'] == 'admin'){
 

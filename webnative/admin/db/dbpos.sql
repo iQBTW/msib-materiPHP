@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2023 at 01:22 PM
+-- Generation Time: May 12, 2023 at 10:13 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.2.3
 
@@ -68,6 +68,30 @@ INSERT INTO `kartu` (`id`, `kode`, `nama`, `diskon`, `iuran`) VALUES
 (3, 'SLV', 'Silver', 0.025, 50000),
 (4, 'NO', 'Non Member', 0, 0),
 (5, 'BRNZ', 'Bronze Member', 0.01, 20000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `member`
+--
+
+CREATE TABLE `member` (
+  `id` int(11) NOT NULL,
+  `fullname` varchar(30) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `role` enum('admin','manager','staff') NOT NULL,
+  `foto` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `member`
+--
+
+INSERT INTO `member` (`id`, `fullname`, `username`, `password`, `role`, `foto`) VALUES
+(1, 'Admin', 'admin', 'af7e0928fcba501d8ed0385c794e690fe151bf16', 'admin', 'admin.jpg'),
+(2, 'Eko', 'eko', 'bc734cf7dc3e54a221a91655c1b87ecb9451db32', 'manager', 'manager.jpg'),
+(3, 'Staff', 'staff', 'ae186d20e1a1b46737a98ef69fc0896ba7cca385', 'staff', 'staff.jpg');
 
 -- --------------------------------------------------------
 
@@ -329,6 +353,13 @@ ALTER TABLE `kartu`
   ADD UNIQUE KEY `kode_UNIQUE` (`kode`);
 
 --
+-- Indexes for table `member`
+--
+ALTER TABLE `member`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- Indexes for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
@@ -397,6 +428,12 @@ ALTER TABLE `jenis_produk`
 --
 ALTER TABLE `kartu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `member`
+--
+ALTER TABLE `member`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pelanggan`

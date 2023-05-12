@@ -112,7 +112,7 @@ if(isset($sesi)){
                     <td><?= $row['Kategori'] ?></td>
                     <td>
                         <form action="controllers/produk_controllers.php" method="POST">
-                            <a href="#" class="btn btn-info btn-sm">Details</a>
+                            <a href="index.php?url=product_details&id=<?=$row['id']?>" class="btn btn-info btn-sm">Details</a>
                             <?php 
                                 if($sesi['role'] == 'admin'){
                             ?>
