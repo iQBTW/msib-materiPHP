@@ -5,7 +5,7 @@ include_once '../models/Member.php';
 
 $model = new Member();
 
-if(isset($_POST['username']) && isset($_POST['password'])){
+// if(isset($_POST['username']) && isset($_POST['password'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
 
@@ -13,7 +13,7 @@ if(isset($_POST['username']) && isset($_POST['password'])){
         $username,
         $password
     ];
-}
+// }
 
 $rs = $model->cekLogin($data);
 if(!empty($rs)){
@@ -21,7 +21,7 @@ if(!empty($rs)){
     header('location:../index.php');
 }
 else {
-    echo '<script> alert("Username/Password anda salah);history.back();</script>';
+    echo '<script> alert("Silahkan login!");window.location.href="/msib-materiPHP/webnative/index.php?hal=admin/login";</script>';
 }
 
 ?>
