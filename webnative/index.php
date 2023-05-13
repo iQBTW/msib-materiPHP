@@ -1,5 +1,6 @@
 <?php
-
+include_once 'admin/koneksidb.php';
+include_once 'admin/models/Member.php';
 include_once 'header.php';
 
 ?>
